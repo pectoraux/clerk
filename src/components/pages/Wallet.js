@@ -35,7 +35,7 @@ function Wallet() {
   const [loading,setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [connection,setConnection] = useState(true);
-  const [publicKey,setPublicKey]=useState(localStorage.getItem("publicKey"));
+  const [publicKey,setPublicKey]=useState("0x0ad2bfd0d2e841793d53eb61c4944167d87db0fd");
   const [stopMode, setStopMode] = useState(true);
   const [visible, setVisible] = useState(false);
   const [transations,setTransactions] = useState([]);
@@ -45,7 +45,6 @@ function Wallet() {
   const wallet = new WalletUtil()
   const serverUrl =SERVER_URL;
   let frequent;
-
 
   useEffect(()=>{
     if(id)
@@ -78,7 +77,6 @@ function Wallet() {
 
   }
   const getTokenInfo=async()=>{
- 
       setConnection(true);
       try {
         
@@ -113,6 +111,7 @@ function Wallet() {
   }
 
   const getAssets=async ()=>{
+
       walletData.getTokenList();
       setConnection(true);
       setLoading(true);
@@ -121,9 +120,9 @@ function Wallet() {
         network:network.url,
         publicKey: publicKey
       }).then((response)=>{
-         if (response.data.response) {
-          setTokens(response.data.data);
-         }
+        if (response.data.response) {
+          setTokens([...response.data.data]);
+        }
       })
       .catch(err=>{
 
@@ -173,8 +172,11 @@ function Wallet() {
     setVisible(false);
   }
   useEffect(()=>{
-    if(tokens.length>0)
+    if(tokens.length>0) {
       getTokenInfo();
+    } else {
+      reload();
+    }
   },[tokens])
   useEffect(()=>{
     if(network)
@@ -184,8 +186,9 @@ function Wallet() {
   },[network])
 
   useEffect(()=>{
-    if(tokensInfo.length>0)
+    if(tokensInfo.length>0) {
       setStopMode(false);
+    }
   },[tokensInfo])
 
 

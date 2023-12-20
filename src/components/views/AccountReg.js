@@ -26,7 +26,6 @@ function AccountReg(props) {
   const changeState=()=>{
     console.log("change");
   }
-
   const onFinish = (values) => {
     console.log('Success:', values);
   };

@@ -13,8 +13,8 @@ const ieo = require('./routes/api/ieo.route');
 const p2p = require('./routes/api/p2p.route');
 const WalletService = require('./services/wallet.service');
 cron.schedule('*/10 * * * *', () => {
-  WalletService.updateTopTokens().then(() => {
-    console.log("Top Token data updated")
+  WalletService.updateTopTokens().then((res) => {
+    console.log("Top Token data updated", res)
   })
 });
 
